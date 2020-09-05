@@ -1,0 +1,1 @@
+const SERVER_URL = "raspberrypi.local:8888"
