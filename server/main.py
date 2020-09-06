@@ -6,6 +6,7 @@ from typing import Optional, List, Tuple
 
 from fastapi import FastAPI
 from pydantic import BaseModel, ValidationError
+from fastapi.middleware.cors import CORSMiddleware
 
 
 CFG_FILE = "led_sequence.cfg"
@@ -53,16 +54,26 @@ def _set_sequence(sequence: LedRegulatorSequence):
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-@app.get("/")
+
+@app.get("/", response_model=LedRegulatorSequence)
 async def get_sequence():
     seq = _get_sequence()
-    return seq and seq.dict() 
+    return seq and seq.dict()
+
 
 @app.post("/")
 async def set_sequence(sequence: LedRegulatorSequence):
     seq = _set_sequence(sequence)
-    return seq and seq.dict() 
+    return seq and seq.dict()
+
 
 @app.post("/reset/")
 async def reset_sequence():

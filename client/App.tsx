@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useMemo, useEffect } from "react";
-import { StyleSheet, View, Modal } from "react-native";
+import { StyleSheet, View, Modal, FlatList } from "react-native";
 import {
   DefaultTheme,
   Provider as PaperProvider,
@@ -8,9 +8,12 @@ import {
   DataTable,
   TextInput,
   IconButton,
+  Avatar,
+  Headline
 } from "react-native-paper";
 import * as R from "ramda";
 import LedColorPicker from "./components/LedColorPicker"
+import { loadConfig, saveConfig } from "./api"
 
 const theme = {
   ...DefaultTheme,
@@ -80,6 +83,18 @@ export default function App() {
     setSelectedRows([]);
   }, [sequence]);
 
+  useEffect(() => {
+    loadConfig().then(config => {
+      setColor(config.color)
+      setInitialBrightness(config.initialBrightness)
+      setSequence(config.sequence)
+    })
+  }, [])
+
+  const handleSave = () => {
+    saveConfig({ initialBrightness, color, sequence })
+  }
+
   const rows = useMemo(() => {
     return sequence.map(([target, time], idx) => {
       const isSelected = R.includes(idx, selectedRows);
@@ -95,9 +110,14 @@ export default function App() {
       );
     });
   }, [sequence, selectedRows]);
+
   return (
     <PaperProvider theme={theme}>
         <View style={styles.container}>
+          <View style={styles.header}>
+            <Avatar.Image size={72} source={require('./assets/splash.jpeg')} />
+            <Headline>Ledcontrollosaurus Rex</Headline>
+          </View>
           <View style={styles.buttonPanel}>
             <TextInput
               label="initial brightness"
@@ -112,6 +132,13 @@ export default function App() {
               onPress={openColorPicker}
             >
               Set color
+            </Button>
+            <Button
+              icon={"floppy"}
+              mode={"outlined"}
+              onPress={handleSave}
+            >
+              Save
             </Button>
           </View>
           <View style={styles.buttonPanel}>
@@ -200,4 +227,10 @@ const styles = StyleSheet.create({
   unselectedRow: {
     backgroundColor: null,
   },
+  header: {
+    flex: 0.1,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    marginTop: 20
+  }
 });

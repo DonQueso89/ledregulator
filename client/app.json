@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "client",
-    "slug": "client",
+    "name": "ledcontrollosaurus rex",
+    "slug": "ledcontrollosaurus-rex",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/splash.jpeg",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -21,6 +21,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "for Fringe festival"
   }
 }
