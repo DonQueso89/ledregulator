@@ -142,7 +142,7 @@ def worker():
         except queue.Empty:
             logger.warning(f"No new task found. Continuing with\n{current_config}")
 
-        pixels.brightness = config.initial_brightness
+        pixels.brightness = current_config.initial_brightness
         pixels.show()
         for target, seconds in current_config.sequence:
             delta = (target - pixels.brightness) / (seconds * SMOOTHNESS)
