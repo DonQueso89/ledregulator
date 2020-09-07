@@ -149,7 +149,7 @@ def worker():
             op_func = operator.gt if target < pixels.brightness else operator.lt
             logger.warning(f"Computed delta {delta} and op_func {op_func} from {target} and {seconds}\n")
             while op_func(pixels.brightness, target or 0.01):
-                logger.warning(f"running cur brightness {pixels.brightness}")
+                #  logger.warning(f"running cur brightness {pixels.brightness}")
                 pixels.brightness += delta
                 pixels.show()
                 time.sleep(sleep_time)

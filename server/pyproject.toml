@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ledregulator"
-version = "0.12.0"
+version = "0.13.0"
 description = ""
 authors = ["DonQueso89 <kg.v.ekeren@gmail.com>"]
 

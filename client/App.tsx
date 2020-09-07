@@ -120,8 +120,8 @@ export default function App() {
           </View>
           <View style={styles.buttonPanel}>
             <TextInput
-              label="initial brightness"
-              value={initialBrightness}
+              label={"initial brightness"}
+              value={initialBrightness.toString()}
               onChangeText={R.pipe(parseFloat, setInitialBrightness)}
               style={styles.inputCell}
               mode="outlined"

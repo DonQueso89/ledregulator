@@ -12,13 +12,18 @@ const LedColorPicker = ({ initialColor, updateColor, dismiss }) => {
       updateColor(fromHsv(debouncedColor))
   }, [debouncedColor])
 
+  const handleSelect = () => {
+    updateColor(color)
+    dismiss()
+  }
+
   return (
     <View style={styles.colorPickerContainer}>
       <ColorPicker
         onColorChange={setColor}
         style={styles.colorPicker}
         color={color}
-        onColorSelected={dismiss}
+        onColorSelected={handleSelect}
       />
     </View>
   );
