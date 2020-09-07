@@ -99,7 +99,7 @@ async def reset_sequence():
 
 pixel_pin = board.D18
  
-num_pixels = 10
+num_pixels = 50
  
 ORDER = neopixel.GRB
 SMOOTHNESS = 10  # increments per second
