@@ -108,8 +108,8 @@ pixels = neopixel.NeoPixel(
     pixel_pin, num_pixels, brightness=0.0, auto_write=False, pixel_order=neopixel.GRB
 )
 
-def to_rgb_tuple(s):
-    return int(s[1:3], 16), int(s[3:5], 16), int(s[5:], 16)
+def to_grb_tuple(s):
+    return int(s[3:5], 16), int(s[:3], 16), int(s[5:], 16)
 
 
 config_queue = queue.Queue()
@@ -125,7 +125,7 @@ def init_config(config: LedRegulatorSequence):
         pixels.show()
         time.sleep(0.5)
 
-    pixels.fill(to_rgb_tuple(config.color))
+    pixels.fill(to_grb_tuple(config.color))
     pixels.brightness = config.initial_brightness
     pixels.show()
 
@@ -148,7 +148,7 @@ def worker():
             delta = (target - pixels.brightness) / (seconds * SMOOTHNESS)
             op_func = operator.gt if target < pixels.brightness else operator.lt
             logger.warning(f"Computed delta {delta} and op_func {op_func} from {target} and {seconds}\n")
-            while op_func(pixels.brightness, target):
+            while op_func(pixels.brightness, target or 0.01):
                 logger.warning(f"running cur brightness {pixels.brightness}")
                 pixels.brightness += delta
                 pixels.show()
