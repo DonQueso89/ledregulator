@@ -1,6 +1,6 @@
 import * as R from "ramda";
 
-const SERVER_URL = "http://localhost:8000/";
+const SERVER_URL = "http://raspberrypi.local:8888/";
 
 interface LedConfig {
   initialBrightness: number;
