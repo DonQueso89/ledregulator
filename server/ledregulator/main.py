@@ -146,7 +146,7 @@ def worker():
         pixels.show()
         for target, seconds in current_config.sequence:
             delta = (target - pixels.brightness) / (seconds * SMOOTHNESS)
-            logger.warning(f"Computed delta {delta} from {target} and {time}\n")
+            logger.warning(f"Computed delta {delta} from {target} and {seconds}\n")
             op_func = operator.gt if target < pixels.brightness else operator.lt
             while op_func(pixels.brightness, target):
                 pixels.brightness += delta
