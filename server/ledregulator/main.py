@@ -146,9 +146,10 @@ def worker():
         pixels.show()
         for target, seconds in current_config.sequence:
             delta = (target - pixels.brightness) / (seconds * SMOOTHNESS)
-            logger.warning(f"Computed delta {delta} from {target} and {seconds}\n")
             op_func = operator.gt if target < pixels.brightness else operator.lt
+            logger.warning(f"Computed delta {delta} and op_func {op_func} from {target} and {seconds}\n")
             while op_func(pixels.brightness, target):
+                logger.warning("running")
                 pixels.brightness += delta
                 pixels.show()
                 time.sleep(sleep_time)
