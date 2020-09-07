@@ -143,7 +143,7 @@ def worker():
             logger.warning(f"No new task found. Continuing with\n{current_config}")
 
         for target, seconds in current_config.sequence:
-            delta = (target - pixels.initial_brightness) / (seconds * SMOOTHNESS)
+            delta = (target - pixels.brightness) / (seconds * SMOOTHNESS)
             op_func = operator.gt if target < pixels.brightness else operator.lt
             while op_func(pixels.brightness, target):
                 pixels.brightness += delta
