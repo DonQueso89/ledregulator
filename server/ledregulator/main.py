@@ -109,7 +109,7 @@ pixels = neopixel.NeoPixel(
 )
 
 def to_grb_tuple(s):
-    return int(s[3:5], 16), int(s[:3], 16), int(s[5:], 16)
+    return int(s[3:5], 16), int(s[1:3], 16), int(s[5:], 16)
 
 
 config_queue = queue.Queue()
