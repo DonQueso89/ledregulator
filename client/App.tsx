@@ -14,6 +14,8 @@ import {
 import * as R from "ramda";
 import LedColorPicker from "./components/LedColorPicker"
 import { loadConfig, saveConfig } from "./api"
+import FlashMessage from "react-native-flash-message";
+
 
 const theme = {
   ...DefaultTheme,
@@ -36,15 +38,15 @@ const SEQUENCE = [
 export default function App() {
   const [selectedRows, setSelectedRows] = useState([]);
   const [sequence, setSequence] = useState(SEQUENCE);
-  const [newTarget, setNewTarget] = useState(0.0);
-  const [newTime, setNewTime] = useState(0);
-  const [initialBrightness, setInitialBrightness] = useState(0.0);
+  const [newTarget, setNewTarget] = useState("0");
+  const [newTime, setNewTime] = useState("0");
+  const [initialBrightness, setInitialBrightness] = useState("0.0");
   const [colorPickerVisible, setColorPickerVisible] = useState(false)
   const [color, setColor] = useState("#ff0000");
   const dismissColorPicker = () => setColorPickerVisible(false)
   const openColorPicker = () => setColorPickerVisible(true)
   const addRow = () => {
-    setSequence((x) => [...sequence, [newTarget, newTime]]);
+    setSequence((x) => [...sequence, [parseInt(newTarget), parseInt(newTime)]]);
   };
   const removeRows = () => {
     setSequence((seq) =>
@@ -83,16 +85,22 @@ export default function App() {
     setSelectedRows([]);
   }, [sequence]);
 
-  useEffect(() => {
-    loadConfig().then(config => {
-      setColor(config.color)
-      setInitialBrightness(config.initialBrightness)
-      setSequence(config.sequence)
+  const reloadConfig = () => {
+    loadConfig().then(newConfig => {
+      if (newConfig) {
+        setColor(newConfig.color)
+        setInitialBrightness(newConfig.initialBrightness.toString())
+        setSequence(newConfig.sequence)
+      }
     })
+  }
+
+  useEffect(() => {
+    reloadConfig()
   }, [])
 
   const handleSave = () => {
-    saveConfig({ initialBrightness, color, sequence })
+    saveConfig({ initialBrightness: parseFloat(initialBrightness), color, sequence })
   }
 
   const rows = useMemo(() => {
@@ -121,8 +129,8 @@ export default function App() {
           <View style={styles.buttonPanel}>
             <TextInput
               label={"initial brightness"}
-              value={initialBrightness.toString()}
-              onChangeText={R.pipe(parseFloat, setInitialBrightness)}
+              value={initialBrightness}
+              onChangeText={setInitialBrightness}
               style={styles.inputCell}
               mode="outlined"
             />
@@ -157,6 +165,13 @@ export default function App() {
               onPress={removeRows}
             >
               Delete rows
+            </Button>
+            <Button
+              icon={"autorenew"}
+              mode={"outlined"}
+              onPress={reloadConfig}
+            >
+              Sync
             </Button>
           </View>
           <DataTable style={styles.tableStyle}>
@@ -196,6 +211,7 @@ export default function App() {
             />
           </Modal>
         </View>
+          <FlashMessage position={"top"} />
     </PaperProvider>
   );
 }

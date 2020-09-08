@@ -13,7 +13,7 @@ const LedColorPicker = ({ initialColor, updateColor, dismiss }) => {
   }, [debouncedColor])
 
   const handleSelect = () => {
-    updateColor(color)
+    updateColor(fromHsv(color))
     dismiss()
   }
 

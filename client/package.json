@@ -16,6 +16,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
     "react-native-color-picker": "^0.6.0",
     "react-native-editable-table": "^1.0.0",
+    "react-native-flash-message": "^0.1.16",
     "react-native-paper": "^4.1.0",
     "react-native-web": "~0.11.7"
   },
