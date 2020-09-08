@@ -148,7 +148,8 @@ def worker():
             delta = (target - pixels.brightness) / (seconds * SMOOTHNESS)
             op_func = operator.gt if target < pixels.brightness else operator.lt
             logger.warning(f"Computed delta {delta} and op_func {op_func} from {target} and {seconds}\n")
-            while op_func(pixels.brightness, target or 0.01):
+            target = min(max(target, 0.001), 0.999) # clip target because it will never actually hit 1 or 0
+            while op_func(pixels.brightness, target):
                 #  logger.warning(f"running cur brightness {pixels.brightness}")
                 pixels.brightness += delta
                 pixels.show()

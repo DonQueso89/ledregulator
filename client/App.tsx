@@ -188,14 +188,14 @@ export default function App() {
               <TextInput
                 label="target"
                 value={newTarget}
-                onChangeText={R.pipe(parseFloat, setNewTarget)}
+                onChangeText={setNewTarget}
                 style={styles.inputCell}
                 mode="outlined"
               />
               <TextInput
                 label="time"
                 value={newTime}
-                onChangeText={R.pipe(parseInt, setNewTime)}
+                onChangeText={setNewTime}
                 style={styles.inputCell}
                 mode="outlined"
               />
