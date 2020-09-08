@@ -1,7 +1,7 @@
 import * as R from "ramda";
 import { showMessage } from "react-native-flash-message"
 
-const SERVER_URL = "http://192.168.0.135:8888/";
+const SERVER_URL = "http://raspberrypi.local:8888/";
 
 interface LedConfig {
   initialBrightness: number;
