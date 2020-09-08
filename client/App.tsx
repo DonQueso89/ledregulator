@@ -46,7 +46,7 @@ export default function App() {
   const dismissColorPicker = () => setColorPickerVisible(false)
   const openColorPicker = () => setColorPickerVisible(true)
   const addRow = () => {
-    setSequence((x) => [...sequence, [parseInt(newTarget), parseInt(newTime)]]);
+    setSequence((x) => [...sequence, [parseFloat(newTarget), parseInt(newTime)]]);
   };
   const removeRows = () => {
     setSequence((seq) =>
